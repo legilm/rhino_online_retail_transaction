@@ -2949,6 +2949,39 @@
       "Maintainer": "Winston Chang <winston@posit.co>",
       "Repository": "CRAN"
     },
+    "shinyFeedback": {
+      "Package": "shinyFeedback",
+      "Version": "0.4.0",
+      "Source": "Repository",
+      "Type": "Package",
+      "Title": "Display User Feedback in Shiny Apps",
+      "Date": "2021-09-23",
+      "Authors@R": "c( person(\"Andy\", \"Merlino\", email = \"andy.merlino@tychobra.com\", role = c(\"aut\", \"cre\")), person(\"Patrick\", \"Howard\", email = \"patrick.howard@tychobra.com\", role = c(\"aut\")))",
+      "Description": "Easily display user feedback in Shiny apps.",
+      "License": "MIT + file LICENSE",
+      "Depends": [
+        "R (>= 3.1.2)"
+      ],
+      "RoxygenNote": "7.1.2",
+      "Encoding": "UTF-8",
+      "Suggests": [
+        "knitr",
+        "rmarkdown"
+      ],
+      "VignetteBuilder": "knitr",
+      "Imports": [
+        "fontawesome",
+        "htmltools",
+        "jsonlite",
+        "shiny"
+      ],
+      "URL": "https://github.com/merlinoa/shinyFeedback",
+      "BugReports": "https://github.com/merlinoa/shinyFeedback/issues",
+      "NeedsCompilation": "no",
+      "Author": "Andy Merlino [aut, cre], Patrick Howard [aut]",
+      "Maintainer": "Andy Merlino <andy.merlino@tychobra.com>",
+      "Repository": "CRAN"
+    },
     "sourcetools": {
       "Package": "sourcetools",
       "Version": "0.1.7-1",

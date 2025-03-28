@@ -1,7 +1,12 @@
 # app/view/sidebar.R
 
 box::use(
-  shiny[tagList, NS, div, h3, p]
+  app/logic/data[fetch_data]
+)
+
+box::use(
+  shiny[tagList, NS, div, h3, p, dateRangeInput,hr,verbatimTextOutput, selectInput, downloadButton],
+  shinyFeedback[loadingButton, ]
 )
 
 # Define the UI of the sidebar
@@ -20,14 +25,14 @@ ui <- function(id) {
         class = "sidebar-content",
         dateRangeInput(ns("dates"), 
                        label = h3("Date range"), 
-                       min = min(retail_data$InvoiceDate),
-                       max = max(retail_data$InvoiceDate)),
+                       min = min(fetch_data()$InvoiceDate),
+                       max = max(fetch_data()$InvoiceDate)),
         hr(),
         verbatimTextOutput(ns("date_range_selected")),
         
         selectInput(ns("country_filter"), 
                     "Select Country",
-                    choices = c("All", unique(retail_data$Country)),
+                    choices = c("All", unique(fetch_data()$Country)),
                     multiple = FALSE,
                     selected = "All"),
         
@@ -51,4 +56,55 @@ ui <- function(id) {
   )
 }
 
+#' @export
+server <- function(id) {
+  moduleServer(id, function(input, output, session){
+    ns <- NS(id)
 
+weather <- eventReactive(input$filter_button, {
+  if (input$country_filter == "All") {
+    return(fetch_data())
+  } else {
+    return(fetch_data() |> 
+             filter(Country == input$country_filter))
+  }
+})
+
+
+
+# Filter data based on selected country
+filtered_data <- eventReactive(input$filter_button, {
+  if (input$country_filter == "All") {
+    return(fetch_data())
+  } else {
+    return(fetch_data() |> 
+             filter(Country == input$country_filter))
+  }
+})
+
+# You can access the values of the widget (as a vector of Dates)
+# with input$dates, e.g.
+output$date_range_selected <- renderPrint({ input$dates })
+
+observeEvent(input$filter_button, {
+  
+  #  data <- filtered_data()
+  
+  resetLoadingButton("filter_button")
+})
+
+output$download_btn <- downloadHandler(
+  filename = function() {
+    paste0(input$country_to_download, " - ", Sys.Date(), " - Sales data", ".csv")  # File name based on selection
+  },
+  content = function(file) {
+    
+    # Filter data based on user selection
+    data_to_download <- fetch_data() |> 
+      filter(Country == input$country_to_download)
+    
+    # Save the filtered data in the output file
+    rio::export(data_to_download, file, "csv")
+  })
+  })
+}
