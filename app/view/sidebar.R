@@ -32,15 +32,14 @@ ui <- function(id) {
                 choices = c("All", unique(fetch_data()$Country)),
                 multiple = FALSE,
                 selected = "All"),
-    actionButton(ns("filter_button"), "Filter"),
-    # loadingButton(
-    #   ns("filter_button"),
-    #   "Filter",
-    #   class = "btn btn-primary",
-    #   style = "width: 150px;",
-    #   loadingLabel = "Loading...",
-    #   loadingSpinner = "spinner"
-    # ),
+    loadingButton(
+      ns("filter_button"),
+      "Filter",
+      class = "btn btn-primary",
+      style = "width: 150px;",
+      loadingLabel = "Loading...",
+      loadingSpinner = "spinner"
+    ),
     
     p("Choose a country to download the sales file."),
     

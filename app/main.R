@@ -13,10 +13,11 @@ box::use(
 
 #' @export
 ui <- function(id) {
+  ns <- NS(id)
   page_sidebar(
     useShinyFeedback(),
     title = "Online retail data",
-    sidebar = sidebar$ui("sidebar")
+    sidebar = sidebar$ui(ns("sidebar"))
   )
 }
 
