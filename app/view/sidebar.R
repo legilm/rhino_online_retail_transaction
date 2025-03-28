@@ -5,8 +5,9 @@ box::use(
 )
 
 box::use(
-  shiny[tagList, NS, div, h3, p, dateRangeInput,hr,verbatimTextOutput, selectInput, downloadButton],
-  shinyFeedback[loadingButton, ]
+  shiny[downloadHandler,observeEvent,eventReactive,renderPrint,tagList, NS, div, h3, p, dateRangeInput,hr,verbatimTextOutput,moduleServer, selectInput, downloadButton],
+  shinyFeedback[loadingButton,resetLoadingButton ],
+  bslib[page_sidebar, card, card_body]
 )
 
 # Define the UI of the sidebar
@@ -14,19 +15,16 @@ box::use(
 ui <- function(id) {
   ns <- NS(id)
   
-  tagList(
-    div(
-      class = "sidebar",
-      div(
-        class = "sidebar-header",
-        h3("Online retail data")
-      ),
-      div(
-        class = "sidebar-content",
+  page_sidebar(
+    title = ("Online retail data"),
+    sidebar = card(
+      card_body(
         dateRangeInput(ns("dates"), 
-                       label = h3("Date range"), 
+                       label = ("Select the date range"), 
                        min = min(fetch_data()$InvoiceDate),
-                       max = max(fetch_data()$InvoiceDate)),
+                       max = max(fetch_data()$InvoiceDate),
+                       start = min(fetch_data()$InvoiceDate),
+                       end = max(fetch_data()$InvoiceDate)),
         hr(),
         verbatimTextOutput(ns("date_range_selected")),
         
@@ -87,7 +85,7 @@ filtered_data <- eventReactive(input$filter_button, {
 output$date_range_selected <- renderPrint({ input$dates })
 
 observeEvent(input$filter_button, {
-  
+  Sys.sleep(3)
   #  data <- filtered_data()
   
   resetLoadingButton("filter_button")

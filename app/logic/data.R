@@ -1,5 +1,7 @@
 # app/logic/data.R
-library(rio)
+box::use(
+  rio[import]
+)
 
 #' @export
 fetch_data <- function(){

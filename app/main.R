@@ -2,7 +2,7 @@
 
 box::use(
   app/view/sidebar,
-  app/logic/data
+   app/logic/data
 )
 
 box::use(
@@ -15,7 +15,7 @@ ui <- function(id) {
   ns <- NS(id)
   
   bootstrapPage(
-    sidebar$ui(ns("sidebar"))
+    sidebar$ui("sidebar")
   )
 }
 
@@ -23,6 +23,6 @@ ui <- function(id) {
 server <- function(id) {
   shiny::moduleServer(id, function(input, output, session) {
     ns <- session$ns
-    sidebar$server(ns("sidebar"))
+    sidebar$server("sidebar")
   })
 }
