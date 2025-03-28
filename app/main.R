@@ -6,23 +6,23 @@ box::use(
 )
 
 box::use(
-  shiny[bootstrapPage, div, moduleServer, NS, renderUI, tags, uiOutput],
-  bslib[bs_theme],
+  shiny[p, mainPanel, sidebarLayout, div, moduleServer, NS, renderUI, tags, uiOutput],
+  bslib[bs_theme, page_sidebar],
+  shinyFeedback[useShinyFeedback],
 )
 
 #' @export
 ui <- function(id) {
-  ns <- NS(id)
-  
-  bootstrapPage(
-    sidebar$ui("sidebar")
+  page_sidebar(
+    useShinyFeedback(),
+    title = "Online retail data",
+    sidebar = sidebar$ui("sidebar")
   )
 }
 
 #' @export
 server <- function(id) {
-  shiny::moduleServer(id, function(input, output, session) {
-    ns <- session$ns
+  moduleServer(id, function(input, output, session) {
     sidebar$server("sidebar")
   })
 }
