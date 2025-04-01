@@ -10,6 +10,7 @@ box::use(
   shiny[p, mainPanel, sidebarLayout, div, moduleServer, NS, renderUI, tags, uiOutput],
   bslib[bs_theme, page_sidebar, card],
   shinyFeedback[useShinyFeedback],
+  plotly[renderPlotly, plot_ly, layout, plotlyOutput],
 )
 
 #' @export
@@ -30,3 +31,4 @@ server <- function(id) {
     plotly$server("plotly")
   })
 }
+

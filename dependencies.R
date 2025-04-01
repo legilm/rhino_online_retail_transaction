@@ -2,6 +2,7 @@
 library(bslib)
 library(dplyr)
 library(lubridate)
+library(pak)
 library(rhino)
 library(rio)
 library(shinyFeedback)

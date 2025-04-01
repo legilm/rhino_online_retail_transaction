@@ -30,10 +30,6 @@ server <- function(id) {
 
 
     # Plotly - Sales Trends
-    # observeEvent(input$filter_button,{
-    # if (!is.null(input$dates) && length(input$dates) == 2) 
-    #   {
-    #   
     output$plotly <- renderPlotly({
       data <- fetch_data() |>
         arrange(InvoiceDate) |>
