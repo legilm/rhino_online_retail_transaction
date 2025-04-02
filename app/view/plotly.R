@@ -2,7 +2,7 @@
 
 box::use(
   app/logic/data[fetch_data],
-  app/view/sidebar
+  app/view/sidebar[dates]
 )
 
 box::use(
@@ -35,7 +35,7 @@ server <- function(id) {
         arrange(InvoiceDate) |>
         group_by(InvoiceDate) |>
         summarize(Revenue = sum(Revenue)) #|> 
-        # filter(InvoiceDate >= input$dates[1] & InvoiceDate <= input$dates[2])
+        filter(InvoiceDate >= input$dates[1] & InvoiceDate <= input$dates[2])
       plot_ly(data,
               x = ~InvoiceDate,
               y = ~Revenue,
