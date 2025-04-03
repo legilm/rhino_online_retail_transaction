@@ -17,7 +17,6 @@ box::use(
 #' @export
 ui <- function(id) {
   ns <- NS(id)
-  
   sidebar(
     dateRangeInput(ns("dates"), 
                    label = ("Select the date range"), 
@@ -51,10 +50,10 @@ ui <- function(id) {
 server <- function(id) {
   moduleServer(id, function(input, output, session){
     
-    observeEvent(input$filter_button, {
+    output$filter_button <- ({observeEvent(input$filter_button, {
       
       resetLoadingButton("filter_button")
-    })
+    })})
     
     output$download_btn <- downloadHandler(
       filename = function() {
@@ -72,3 +71,6 @@ server <- function(id) {
     )
   })
 }
+
+#' @export
+dates

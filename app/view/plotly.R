@@ -27,32 +27,27 @@ ui <- function(id) {
 server <- function(id) {
   moduleServer(id, function(input, output, session){
     
-
-
     # Plotly - Sales Trends
-    output$plotly <- renderPlotly({
+    observeEvent(input$dates, {
       data <- fetch_data() |>
         arrange(InvoiceDate) |>
         group_by(InvoiceDate) |>
         summarize(Revenue = sum(Revenue)) #|> 
         filter(InvoiceDate >= input$dates[1] & InvoiceDate <= input$dates[2])
+      output$plotly <- renderPlotly({
       plot_ly(data,
               x = ~InvoiceDate,
               y = ~Revenue,
               type = "scatter",
               mode = "lines",
-              hovertemplate = "Date: %{x}<br>Revenue: %{y:.2f}"
-      ) |>
+              hovertemplate = "Date: %{x}<br>Revenue: %{y:.2f}") |>
         layout(
           title = list(text = "Revenue over Time"),
           xaxis = list(title = "Invoice Date", type = "date", rangeslider = list(visible = FALSE)),
           yaxis = list(title = "Revenue"),
           hovermode = "x unified"
         )
+      })
     })
-    # }
-    # }
-      # )
-    
   })
 }
